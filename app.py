@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
-from resources.admin import Adminlogin,Sport,Schedule,Team_details
+from resources.admin import Adminlogin,Sport,Schedule,Team_details,Team_members
 
 app=Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS']=True
@@ -26,6 +26,10 @@ api.add_resource(Adminlogin,'/Adminlogin')
 api.add_resource(Sport,'/sportdetails')
 api.add_resource(Schedule,'/schedule')
 api.add_resource(Team_details,'/team_details')
+api.add_resource(Team_members,'/team_members')
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

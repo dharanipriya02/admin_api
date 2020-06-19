@@ -75,87 +75,6 @@ class Team_details(Resource):
             return query(f"""SELECT * FROM group10.team_details WHERE sport_id={data['sport_id']}""")
         except:
             return {"message":"There was an error connecting to team_details table."},500
-    def get(self):#carrom table (individual team member  details)
-        parser=reqparse.RequestParser()
-        parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")
-        data=parser.parse_args()
-
-        try:
-            return query(f"""SELECT * FROM group10.carroms WHERE team_id={data['team_id']}""")
-        except:
-            return {"message":"There was an error connecting to team_details table."},500
-    def get(self):#football
-        parser=reqparse.RequestParser()
-        parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")
-        data=parser.parse_args()
-
-        try:
-            return query(f"""SELECT * FROM group10.football WHERE team_id={data['team_id']}""")
-        except:
-            return {"message":"There was an error connecting to team_details table."},500
-    def get(self):#badminton
-        parser=reqparse.RequestParser()
-        parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")
-        data=parser.parse_args()
-
-        try:
-            return query(f"""SELECT * FROM group10.badminton WHERE team_id={data['team_id']}""")
-        except:
-            return {"message":"There was an error connecting to team_details table."},500
-    def get(self):#basketball
-        parser=reqparse.RequestParser()
-        parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")
-        data=parser.parse_args()
-
-        try:
-            return query(f"""SELECT * FROM group10.basketball WHERE team_id={data['team_id']}""")
-        except:
-            return {"message":"There was an error connecting to team_details table."},500
-    def get(self):#cricket
-        parser=reqparse.RequestParser()
-        parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")
-        data=parser.parse_args()
-
-        try:
-            return query(f"""SELECT * FROM group10.cricket WHERE team_id={data['team_id']}""")
-        except:
-            return {"message":"There was an error connecting to team_details table."},500
-    def get(self):#kabaddi
-        parser=reqparse.RequestParser()
-        parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")
-        data=parser.parse_args()
-
-        try:
-            return query(f"""SELECT * FROM group10.kabaddi WHERE team_id={data['team_id']}""")
-        except:
-            return {"message":"There was an error connecting to team_details table."},500
-    def get(self):#tabletennis
-        parser=reqparse.RequestParser()
-        parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")
-        data=parser.parse_args()
-
-        try:
-            return query(f"""SELECT * FROM group10.table_tennis WHERE team_id={data['team_id']}""")
-        except:
-            return {"message":"There was an error connecting to team_details table."},500
-    def get(self):#volleyball
-        parser=reqparse.RequestParser()
-        parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")
-        data=parser.parse_args()
-
-        try:
-            return query(f"""SELECT * FROM group10.volley_ball WHERE team_id={data['team_id']}""")
-        except:
-            return {"message":"There was an error connecting to team_details table."},500
-    def get(self):#chess
-        parser=reqparse.RequestParser()
-        parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")
-        data=parser.parse_args()
-
-        try:
-            return query(f"""SELECT * FROM group10.chess WHERE team_id={data['team_id']}""")
-        except:
-            return {"message":"There was an error connecting to team_details table."},500
     def post(self):#accepting the registration
         parser=reqparse.RequestParser()
         parser.add_argument('team_id',type=int,required=True,help="team_id cannot be left blank!")
@@ -165,6 +84,104 @@ class Team_details(Resource):
         except:
             return {"message":"There was an error inserting into emp table."},500
         return {"message":"Successfully Inserted."},201
+        
+class Team_members(Resource):
+    def get(self):#carrom table (individual team member  details)
+        parser=reqparse.RequestParser()
+        parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")
+        parser.add_argument('sport_id',type=str,required=True,help="sport id cannot be left blank!")
+        data=parser.parse_args()
+        sport={'badminton':  query(f"""SELECT * FROM group10.badminton WHERE team_id={data['team_id']}"""),
+                'basketball': query(f"""SELECT * FROM group10.basketball WHERE team_id={data['team_id']} """),
+                'cricket': query(f"""SELECT * FROM group10.cricket WHERE team_id={data['team_id']}"""),
+                'football': query(f"""SELECT * FROM group10.football WHERE team_id={data['team_id']}"""),
+                'kabaddi': query(f"""SELECT * FROM group10.kabaddi WHERE team_id={data['team_id']}"""),
+                'tabble tennis': query(f"""SELECT * FROM group10.table_tennis WHERE team_id={data['team_id']}"""),
+                'volley ball': query(f"""SELECT * FROM group10.volley_ball WHERE team_id={data['team_id']}"""),
+                'chess':  query(f"""SELECT * FROM group10.chess WHERE team_id={data['team_id']}"""),
+                'carroms': query(f"""SELECT * FROM group10.carroms WHERE team_id={data['team_id']} """)
+        }
+    
+        return sport[f"""{data['sport_id']}"""]
+        
+    
+    #def get(self):#basketball
+   # }
 
+        #try:
+        #    return query(f"""SELECT * FROM group10.carroms WHERE team_id={data['team_id']}""")
+        #except:
+         #   return {"message":"There was an error connecting to team_details table."},500
+   # def get(self):#football
+    #   parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")
+     #   data=parser.parse_args()
+#  try:
+ #           return query(f"""SELECT * FROM group10.football ]}WHERE team_id={data['team_id'""")
+  #      except:
+   #         return {"message":"There was an error connecting to team_details table."},500
+    #def get(self):#badminton
+     #   parser=reqparse.RequestParser()
+      #  parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")
+       # data=parser.parse_args()
+
+        #try:
+         #   return query(f"""SELECT * FROM group10.badminton WHERE team_id={data['team_id']}""")
+        #except:
+         #   return {"message":"There was an error connecting to team_details table."},500
+    #def get(self):#basketball
+     #   parser=reqparse.RequestParser()
+      #  parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")
+       # data=parser.parse_args()
+
+        #try:
+         #   return query(f"""SELECT * FROM group10.basketball WHERE team_id={data['team_id']}""")
+        #except:
+         #   return {"message":"There was an error connecting to team_details table."},500
+   # def get(self):#cricket
+    #    parser=reqparse.RequestParser()
+     #   parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")
+      #  data=parser.parse_args()
+
+       # try:
+        #    return query(f"""SELECT * FROM group10.cricket WHERE team_id={data['team_id']}""")
+        #except:
+         #   return {"message":"There was an error connecting to team_details table."},500
+   # def get(self):#kabaddi
+    #    parser=reqparse.RequestParser()
+     #   parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")
+      #  data=parser.parse_args()
+
+       # try:
+        #    return query(f"""SELECT * FROM group10.kabaddi WHERE team_id={data['team_id']}""")
+       # except:
+        #    return {"message":"There was an error connecting to team_details table."},500
+   # def get(self):#tabletennis
+    #    parser=reqparse.RequestParser()
+     #   parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")
+      #  data=parser.parse_args()
+
+       # try:
+        #    return query(f"""SELECT * FROM group10.table_tennis WHERE team_id={data['team_id']}""")
+       # except:
+        #    return {"message":"There was an error connecting to team_details table."},500
+    #def get(self):#volleyball
+     #   parser=reqparse.RequestParser()
+      #  parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")
+       # data=parser.parse_args()
+
+       # try:
+        #    return query(f"""SELECT * FROM group10.volley_ball WHERE team_id={data['team_id']}""")
+      #  except:
+       #     return {"message":"There was an error connecting to team_details table."},500
+   # def get(self):#chess
+    #    parser=reqparse.RequestParser()
+     #   parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")
+      #  data=parser.parse_args()
+
+       # try:
+        #    return query(f"""SELECT * FROM group10.chess WHERE team_id={data['team_id']}""")
+       # except:
+        #    return {"message":"There was an error connecting to team_details table."},500
+    
 
 
