@@ -27,6 +27,7 @@ class User():
             return None
 
 class Sport(Resource):#sport details
+    
     def get(self):
         parser=reqparse.RequestParser()
         parser.add_argument('sport_id',type=int,required=True,help="sport id cannot be left blank!")
@@ -53,9 +54,10 @@ class Sport(Resource):#sport details
             query(f"""INSERT INTO group10.sports (sport_id, sport_name, sport_category, mini_team_size, max_team_size) VALUES ({data['sport_id']},
             '{data['sport_name']}','{data['sport_category']}',{data['mini_team_size']},{data['max_team_size']});""")
         except:
-            return {"message":"There was an error inserting into emp table."},500
+            return {"message":"There was an error inserting into sport table."},500
         return {"message":"Successfully Inserted."},201
 class Schedule(Resource):#viewing the schedule
+    
     def get(self):
         parser=reqparse.RequestParser()
         parser.add_argument('sport_id',type=int,required=True,help="sport id cannot be left blank!")
@@ -65,7 +67,31 @@ class Schedule(Resource):#viewing the schedule
             return query(f"""SELECT * FROM group10.schedule WHERE sport_id={data['sport_id']}""")
         except:
             return {"message":"There was an error connecting to sport table."},500
+class Modify_schedule(Resource):
+    
+    def post(self):
+        parser=reqparse.RequestParser()
+        #parser.add_argument('sport_name',type=str,required=True,help="sport name cannot be left blank!")
+        parser.add_argument('team1_id',type=int,required=True,help="team1_id cannot be left blank!")
+        parser.add_argument('team2_id',type=int,required=True,help="team2_id cannot be left blank!")
+        parser.add_argument('start_timing',type=str,required=True,help="start_timing cannotstr left blank!")
+        parser.add_argument('reporting_time',type=str,required=True,help="reporting_time cannot be left blank!")
+        parser.add_argument('match_date',type=str,required=True,help="match_date cannot be left blank!")
+        parser.add_argument('match_title',type=str,required=True,help="match_title cannot be left blank!")
+        data=parser.parse_args()
+        
+        try:
+            query(f"""update group10.schedule set start_timing='{data['start_timing']}',reporting_time='{data['reporting_time']}',match_date='{data['match_date']}',
+            match_title='{data['match_title']}' 
+            where team1_id={data['team1_id']} and team2_id={data['team2_id']};""",return_json=False)
+        except:
+            return {"message":"There was an error inserting into schedule table."},500
+        return {"message":"Successfully Inserted."},201
+
+
+
 class Team_details(Resource):
+    
     def get(self):#viewing registered teams
         parser=reqparse.RequestParser()
         parser.add_argument('sport_id',type=int,required=True,help="sport id cannot be left blank!")
@@ -82,10 +108,11 @@ class Team_details(Resource):
         try:
             query(f"""update team_details set status_of_team='accepted' where team_id={data['team_id']};""")
         except:
-            return {"message":"There was an error inserting into emp table."},500
+            return {"message":"There was an error inserting into team_details table."},500
         return {"message":"Successfully Inserted."},201
         
 class Team_members(Resource):
+
     def get(self):#carrom table (individual team member  details)
         parser=reqparse.RequestParser()
         parser.add_argument('team_id',type=int,required=True,help="team id cannot be left blank!")

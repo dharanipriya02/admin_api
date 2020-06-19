@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
-from resources.admin import Adminlogin,Sport,Schedule,Team_details,Team_members
+from resources.admin import Adminlogin,Sport,Schedule,Team_details,Team_members,Modify_schedule
 
 app=Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS']=True
@@ -25,6 +25,9 @@ def invalid_token_callback(error):
 api.add_resource(Adminlogin,'/Adminlogin')
 api.add_resource(Sport,'/sportdetails')
 api.add_resource(Schedule,'/schedule')
+api.add_resource(Modify_schedule,'/Modify_schedule')
+
+
 api.add_resource(Team_details,'/team_details')
 api.add_resource(Team_members,'/team_members')
 
