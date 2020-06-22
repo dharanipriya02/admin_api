@@ -1,7 +1,7 @@
 from flask import Flask,jsonify
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
-from resources.admin import Adminlogin,Sport,Schedule,Team_details,Team_members,Modify_schedule
+from resources.admin import Adminlogin,Sport,Schedule,Team_details,Team_members,Modify_schedule,Add_schedule
 
 
 app=Flask(__name__)
@@ -29,6 +29,7 @@ api.add_resource(Schedule,'/schedule')
 api.add_resource(Modify_schedule,'/Modify_schedule')
 api.add_resource(Team_details,'/team_details')
 api.add_resource(Team_members,'/team_members')
+api.add_resource(Add_schedule,'/add_schedule')
 
 
 
