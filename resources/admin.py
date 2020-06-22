@@ -37,7 +37,7 @@ class Sport(Resource):#sport details
             return query(f"""SELECT * FROM group10.sports WHERE sport_name='{data['sport_name']}'""")
         except:
             return {"message":"There was an error connecting to sport table."},500
-    
+    @jwt_required
     def post(self):#adding sports to sports table
         parser=reqparse.RequestParser()
         parser.add_argument('sport_id',type=int,required=True,help="sport_id cannot be left blank!")
@@ -58,7 +58,7 @@ class Sport(Resource):#sport details
             return {"message":"There was an error inserting into sport table."},500
         return {"message":"Successfully Inserted."},201
 class Schedule(Resource):#viewing the schedule
-    #jwt_required
+    @jwt_required
     def get(self):
         parser=reqparse.RequestParser()
         parser.add_argument('sport_name',type=str,required=True,help="sport name cannot be left blank!")
@@ -69,7 +69,7 @@ class Schedule(Resource):#viewing the schedule
         except:
             return {"message":"There was an error connecting to sport table."},500
 class Modify_schedule(Resource):
-    #@jwt_required
+    @jwt_required
     def post(self):
         parser=reqparse.RequestParser()
         #parser.add_argument('sport_name',type=str,required=True,help="sport name cannot be left blank!")
@@ -82,7 +82,8 @@ class Modify_schedule(Resource):
         data=parser.parse_args()
         
         try:
-            query(f"""update group10.schedule set start_timing='{data['start_timing']}',reporting_time='{data['reporting_time']}',match_date='{data['match_date']}',
+
+            query(f"""update group10.schedule set start_time='{data['start_timing']}',reporting_time='{data['reporting_time']}',match_date='{data['match_date']}',
             match_title='{data['match_title']}' 
             where team1_id={data['team1_id']} and team2_id={data['team2_id']};""",return_json=False)
         except:
@@ -92,7 +93,7 @@ class Modify_schedule(Resource):
 
 
 class Team_details(Resource):
-    #@jwt_required
+    @jwt_required
     def get(self):#viewing registered teams
         parser=reqparse.RequestParser()
         parser.add_argument('sport_name',type=str,required=True,help="sport id cannot be left blank!")
@@ -102,7 +103,7 @@ class Team_details(Resource):
             return query(f"""SELECT * FROM group10.teamdetails WHERE sport_name='{data['sport_name']}'""")
         except:
             return {"message":"There was an error connecting to team_details table."},500
-    
+    @jwt_required
     def post(self):#accepting the registration
         parser=reqparse.RequestParser()
         parser.add_argument('team_name',type=str,required=True,help="team name cannot be left blank!")
@@ -114,7 +115,7 @@ class Team_details(Resource):
         return {"message":"Successfully Inserted."},201
         
 class Team_members(Resource):
-  #  @jwt_required
+    @jwt_required
     def get(self):#carrom table (individual team member  details)
         parser=reqparse.RequestParser()
         parser.add_argument('team_name',type=str,required=True,help="team name cannot be left blank!")

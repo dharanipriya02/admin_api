@@ -2,3 +2,4 @@ Flask
 Flask-RESTful
 pymysql
 gunicorn
+flask-jwt-extended
