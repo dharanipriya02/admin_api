@@ -30,6 +30,8 @@ api.add_resource(Modify_schedule,'/Modify_schedule')
 api.add_resource(Team_details,'/team_details')
 api.add_resource(Team_members,'/team_members')
 api.add_resource(Add_schedule,'/add_schedule')
+api.add_resource(Add_dates,'/add_dates')
+
 api.add_resource(Sport_category,'/sport_category')
 
 
