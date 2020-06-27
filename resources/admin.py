@@ -45,6 +45,8 @@ class Sport(Resource):#sport details
         parser.add_argument('sport_category',type=str,required=True,help="sport_category cannot be left blank!")
         parser.add_argument('mini_team_size',type=int,required=True,help="mini_team_size cannot be left blank!")
         parser.add_argument('max_team_size',type=int,required=True,help="max_team_size cannot be left blank!")
+        parser.add_argument('gender',type=int,required=True,help="gender cannot be left blank!")
+
         data=parser.parse_args()
         try:
             x=query(f"""SELECT * FROM group10.sports WHERE sport_name='{data['sport_name']}'""",return_json=False)
@@ -52,8 +54,8 @@ class Sport(Resource):#sport details
         except:
             return {"message":"There was an error inserting into sport table."},500
         try:
-            query(f"""INSERT INTO group10.sports (sport_id, sport_name, sport_category, mini_team_size, max_team_size) VALUES ({data['sport_id']},
-            '{data['sport_name']}','{data['sport_category']}',{data['mini_team_size']},{data['max_team_size']});""")
+            query(f"""INSERT INTO group10.sports (sport_id, sport_name, sport_category, mini_team_size, max_team_size,gender) VALUES ({data['sport_id']},
+            '{data['sport_name']}','{data['sport_category']}',{data['mini_team_size']},{data['max_team_size']},'{data['gender']}');""")
         except:
             return {"message":"There was an error inserting into sport table."},500
         return {"message":"Successfully Inserted."},201
@@ -67,7 +69,7 @@ class Schedule(Resource):#viewing the schedule
         try:
             return query(f"""SELECT * FROM group10.schedule1 WHERE sport_name='{data['sport_name']}' """)
         except:
-            return {"message":"There was an error connecting to sport table."},500
+            return {"message":"There was an error connecting to schedule1 table."},500
 class Modify_schedule(Resource):
     @jwt_required
     def post(self):
@@ -75,15 +77,20 @@ class Modify_schedule(Resource):
         #parser.add_argument('sport_name',type=str,required=True,help="sport name cannot be left blank!")
         parser.add_argument('team1_id',type=int,required=True,help="team1_id cannot be left blank!")
         parser.add_argument('team2_id',type=int,required=True,help="team2_id cannot be left blank!")
-        parser.add_argument('start_timing',type=str,required=True,help="start_timing cannotstr left blank!")
+        parser.add_argument('start_time',type=str,required=True,help="start_time cannotstr left blank!")
         parser.add_argument('reporting_time',type=str,required=True,help="reporting_time cannot be left blank!")
         parser.add_argument('match_date',type=str,required=True,help="match_date cannot be left blank!")
         parser.add_argument('match_title',type=str,required=True,help="match_title cannot be left blank!")
+     #   parser.add_argument('branch1',type=str,required=True,help="branch1 cannot be left blank!")
+      #  parser.add_argument('branch2',type=str,required=True,help="branch2 cannot be left blank!")
+
+        
+
         data=parser.parse_args()
         
         try:
 
-            query(f"""update group10.schedule1 set start_time='{data['start_timing']}',reporting_time='{data['reporting_time']}',match_date='{data['match_date']}',
+            query(f"""update group10.schedule1 set start_time='{data['start_time']}',reporting_time='{data['reporting_time']}',match_date='{data['match_date']}',
             match_title='{data['match_title']}' 
             where team1_id={data['team1_id']} and team2_id={data['team2_id']};""",return_json=False)
         except:
@@ -100,12 +107,14 @@ class Add_schedule(Resource):
         parser.add_argument('reporting_time',type=str,required=True,help="reporting_time cannot be left blank!")
         parser.add_argument('match_date',type=str,required=True,help="match_date cannot be left blank!")
         parser.add_argument('match_title',type=str,required=True,help="match_title cannot be left blank!")
+        parser.add_argument('branch1',type=str,required=True,help="branch1 cannot be left blank!")
+        parser.add_argument('branch2',type=str,required=True,help="branch2 cannot be left blank!")
         data=parser.parse_args()
         
         #try:
 
         query(f"""insert into  group10.schedule1 values ('{data['sport_name']}',{data['team1_id']},{data['team2_id']},
-            '{data['match_date']}','{data['match_title']}','{data['start_time']}','{data['reporting_time']}');""",return_json=False)
+            '{data['match_date']}','{data['match_title']}','{data['start_time']}','{data['reporting_time']}','{data['branch1']}','{data['branch2']}');""",return_json=False)
         #except:
          #   return {"message":"There was an error inserting into schedule table."},500
         #return {"message":"Successfully Inserted."},201
@@ -162,7 +171,20 @@ class Team_members(Resource):
         except:
             return {"message":"There was an error connecting to team_details table."},500
        
+class Add_dates(Resource):
+    @jwt_required
+    def post(self):
+        parser=reqparse.RequestParser()
+        parser.add_argument('sport_name',type=str,required=True,help="sport name cannot be left blank!")
+        parser.add_argument('start_date',type=str,required=True,help="start date cannot be left blank!")
+        parser.add_argument('end_date',type=str,required=True,help="end date cannot be left blank!")
 
+        data=parser.parse_args()
+        try:
+            query(f"""update sports set start_date='{data['start_date']}', end_date='{data['end_date']}' where sport_name='{data['sport_name']}';""")
+        except:
+            return {"message":"There was an error inserting into tsports table."},500
+        return {"message":"Successfully Inserted."},201
 
         
         
