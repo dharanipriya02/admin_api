@@ -45,7 +45,7 @@ class Sport(Resource):#sport details
         parser.add_argument('sport_category',type=str,required=True,help="sport_category cannot be left blank!")
         parser.add_argument('mini_team_size',type=int,required=True,help="mini_team_size cannot be left blank!")
         parser.add_argument('max_team_size',type=int,required=True,help="max_team_size cannot be left blank!")
-        parser.add_argument('gender',type=int,required=True,help="gender cannot be left blank!")
+        parser.add_argument('gender',type=str,required=True,help="gender cannot be left blank!")
 
         data=parser.parse_args()
         try:
@@ -103,7 +103,7 @@ class Add_schedule(Resource):
         parser.add_argument('sport_name',type=str,required=True,help="sport name cannot be left blank!")
         parser.add_argument('team1_id',type=int,required=True,help="team1_id cannot be left blank!")
         parser.add_argument('team2_id',type=int,required=True,help="team2_id cannot be left blank!")
-        parser.add_argument('start_time',type=str,required=True,help="start_timing cannotstr left blank!")
+        parser.add_argument('start_time',type=str,required=True,help="start_time cannot be left blank!")
         parser.add_argument('reporting_time',type=str,required=True,help="reporting_time cannot be left blank!")
         parser.add_argument('match_date',type=str,required=True,help="match_date cannot be left blank!")
         parser.add_argument('match_title',type=str,required=True,help="match_title cannot be left blank!")
@@ -185,6 +185,17 @@ class Add_dates(Resource):
         except:
             return {"message":"There was an error inserting into tsports table."},500
         return {"message":"Successfully Inserted."},201
+class Sport_category(Resource):
+    @jwt_required
+    def get(self):
+        parser=reqparse.RequestParser()
+        parser.add_argument('sport_category',type=str,required=True,help="Sport Category cannot be left blank!")
+        data=parser.parse_args()
+        try:
+            return query(f"""SELECT * FROM group10.sports WHERE sport_category='{data['sport_category']}'; """)
+        except:
+            return {"message":"There has been an error retrieving sports details"},500
+        return {"message":"Sports details retrieved succesfully."}
 
         
         
