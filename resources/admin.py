@@ -67,7 +67,7 @@ class Schedule(Resource):#viewing the schedule
         data=parser.parse_args()
 
         try:
-            return query(f"""SELECT * FROM group10.schedule1 WHERE sport_name='{data['sport_name']}' """)
+            return query(f"""SELECT match_date,match_title,start_time,reporting_time,team1,team2 FROM group10.schedule1 WHERE sport_name='{data['sport_name']}' """)
         except:
             return {"message":"There was an error connecting to schedule1 table."},500
 class Modify_schedule(Resource):
@@ -81,6 +81,11 @@ class Modify_schedule(Resource):
         parser.add_argument('reporting_time',type=str,required=True,help="reporting_time cannot be left blank!")
         parser.add_argument('match_date',type=str,required=True,help="match_date cannot be left blank!")
         parser.add_argument('match_title',type=str,required=True,help="match_title cannot be left blank!")
+        parser.add_argument('venue',type=str,required=True,help="venue cannot be left blank!")
+        parser.add_argument('team1',type=str,required=True,help="team1 cannot be left blank!")
+        parser.add_argument('team2',type=str,required=True,help="team2 cannot be left blank!")
+
+
      #   parser.add_argument('branch1',type=str,required=True,help="branch1 cannot be left blank!")
       #  parser.add_argument('branch2',type=str,required=True,help="branch2 cannot be left blank!")
 
@@ -91,8 +96,7 @@ class Modify_schedule(Resource):
         try:
 
             query(f"""update group10.schedule1 set start_time='{data['start_time']}',reporting_time='{data['reporting_time']}',match_date='{data['match_date']}',
-            match_title='{data['match_title']}' 
-            where team1_id={data['team1_id']} and team2_id={data['team2_id']};""",return_json=False)
+            match_title='{data['match_title']}',venue='{data['venue']}',team1='{data['team1']}',team2='{data['team2']}'  where team1_id={data['team1_id']} and team2_id={data['team2_id']};""",return_json=False)
         except:
             return {"message":"There was an error inserting into schedule table."},500
         return {"message":"Successfully Inserted."},201
@@ -107,14 +111,16 @@ class Add_schedule(Resource):
         parser.add_argument('reporting_time',type=str,required=True,help="reporting_time cannot be left blank!")
         parser.add_argument('match_date',type=str,required=True,help="match_date cannot be left blank!")
         parser.add_argument('match_title',type=str,required=True,help="match_title cannot be left blank!")
-        parser.add_argument('branch1',type=str,required=True,help="branch1 cannot be left blank!")
-        parser.add_argument('branch2',type=str,required=True,help="branch2 cannot be left blank!")
+        parser.add_argument('team1',type=str,required=True,help="team1 cannot be left blank!")
+        parser.add_argument('team2',type=str,required=True,help="team2 cannot be left blank!")
+        parser.add_argument('venue',type=str,required=True,help="venue cannot be left blank!")
+
         data=parser.parse_args()
         
         #try:
 
         query(f"""insert into  group10.schedule1 values ('{data['sport_name']}',{data['team1_id']},{data['team2_id']},
-            '{data['match_date']}','{data['match_title']}','{data['start_time']}','{data['reporting_time']}','{data['branch1']}','{data['branch2']}');""",return_json=False)
+            '{data['match_date']}','{data['match_title']}','{data['start_time']}','{data['reporting_time']}','{data['team1']}','{data['team2']}','{data['venue']}');""",return_json=False)
         #except:
          #   return {"message":"There was an error inserting into schedule table."},500
         #return {"message":"Successfully Inserted."},201
