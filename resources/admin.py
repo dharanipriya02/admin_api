@@ -67,7 +67,7 @@ class Schedule(Resource):#viewing the schedule
         data=parser.parse_args()
 
         try:
-            return query(f"""SELECT match_date,match_title,start_time,reporting_time,team1,team2 FROM group10.schedule1 WHERE sport_name='{data['sport_name']}' """)
+            return query(f"""SELECT match_date,match_title,start_time,reporting_time,team1,team2,venue FROM group10.schedule1 WHERE sport_name='{data['sport_name']}' """)
         except:
             return {"message":"There was an error connecting to schedule1 table."},500
 class Modify_schedule(Resource):
